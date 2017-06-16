@@ -51,9 +51,25 @@ class CartController extends Controller
     {
         $rs=DB::table('carts')->where('id',$id)->update([$request->input('action')=>$request->input('value')]);
         if($rs){
-            return $msg=['s'=>1,'text'=>'修改成功!'];
+            if($request->input('action')=='number'){
+                $msg=$this->updateTotal($id);
+                $msg['s']=1;
+                $msg['text']='修改成功!';
+                $msg['id']=$id;
+            }
+            return $msg;
         }else{
             return $msg=['s'=>0,'text'=>'修改失败'];
+        }
+    }
+
+    public function updateTotal($id)
+    {
+        $total=Cart::find($id);
+        $total->total=$total->sale*$total->number;
+        if($total->save()){
+            $msg['total']=$total->total;
+            return $msg;
         }
     }
 

@@ -20,8 +20,18 @@ Route::get('/goods/{id}','HomeController@goods');
 
 Route::get('/login','AuthController@login');
 Route::post('/checkLogin','AuthController@checkLogin');
+Route::get('register','AuthController@showRegister');
+Route::post('register','AuthController@register');
 
+Route::get('/show','AuthController@show');
 Route::group(['middleware'=>'auth'],function(){
+    Route::get('user/activated','AuthController@showActivated');
+    Route::get('user/{id}/{token}','AuthController@activated');
+    Route::post('user/resend','AuthController@reSend');
+});
+
+
+Route::group(['middleware'=>'user'],function(){
     Route::post('/cart/create','CartController@create');
     Route::get('/cart','CartController@index');
     Route::post('/cart/update/{id}','CartController@update');
@@ -30,8 +40,14 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/pay/create','PayController@create');
     Route::get('/pay/{id}','PayController@index');
 
+
+    /* user address */
     Route::get('/user/address/create','User\AddressController@create');
     Route::post('/user/address/create','User\AddressController@create');
+    Route::get('/user/address/update/{id}','User\AddressController@update');
+    Route::post('/user/address/edit','User\AddressController@edit');
+    Route::post('/user/address/delete/{id}','User\AddressController@delete');
+    Route::post('/user/address/default/{id}','User\AddressController@defaultAdr');
 
     Route::get('/pay/{id}','PayController@index');
     Route::get('/pay/{pay}/{address}/{goods}','PayController@pay');

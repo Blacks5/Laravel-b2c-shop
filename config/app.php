@@ -170,6 +170,7 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Overtrue\LaravelUEditor\UEditorServiceProvider::class,
         Latrell\Alipay\AlipayServiceProvider::class,
+        LaravelChen\Geetest\GeetestServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+        'Geetest' => LaravelChen\Geetest\Geetest::class,
 
     ],
 

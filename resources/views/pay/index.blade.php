@@ -78,20 +78,18 @@
 
                     <div class="address-left">
                         <div class="user DefaultAddr">
-										<span class="buy-address-detail">
-                   <span class="buy-user">{{$a->name}} </span>
-										<span class="buy-phone">{{$a->phone}}</span>
-										</span>
+                            <span class="buy-address-detail">
+                                <span class="buy-user">{{$a->name}} </span>
+                                <span class="buy-phone">{{$a->phone}}</span>
+                            </span>
                         </div>
                         <div class="default-address DefaultAddr">
                             <span class="buy-line-title buy-line-title-type">收货地址：</span>
                             <span class="buy--address-detail">
-								   <span class="province">{{$a->prov}}</span>
-										<span class="city">{{$a->city}}</span>
-										<span class="dist">{{$a->district}}</span>
-										<span class="street">{{$a->info}}</span>
-										</span>
-
+                                <span class="province">{{$a->prov}}</span>
+                                <span class="city">{{$a->city}}</span>
+                                <span class="dist">{{$a->district}}</span>
+                                <span class="street">{{$a->info}}</span>
                             </span>
                         </div>
                         {!! $a->type==1?'<ins class="deftip">默认地址</ins>':''!!}
@@ -103,11 +101,11 @@
                     <div class="clear"></div>
 
                     <div class="new-addr-btn">
-                        <a href="#" {{$a->type==1?'class="hidden"':''}}>设为默认</a>
+                        <a href="javascript:;" {{$a->type==1?'class="hidden"':''}} onclick="defaultAdr({{$a->id}})">设为默认</a>
                         <span class="new-addr-bar hidden">|</span>
-                        <a href="#">编辑</a>
+                        <a href="javascript:;" onclick="updateAdr({{$a->id}})">编辑</a>
                         <span class="new-addr-bar">|</span>
-                        <a href="javascript:void(0);" onclick="delClick(this);">删除</a>
+                        <a href="javascript:void(0);" onclick="deleteAdr({{$a->id}});">删除</a>
                     </div>
 
                 </li>
@@ -204,9 +202,7 @@
                                         <div class="item-amount ">
                                             <span class="phone-title">购买数量</span>
                                             <div class="sl">
-                                                <input class="min am-btn" name="" type="button" value="-" />
-                                                <input class="text_box" name="" type="text" value="{{$c->number}}" style="width:30px;" />
-                                                <input class="add am-btn" name="" type="button" value="+" />
+                                                <input class="text_box" name="number" type="number" sno="{{$c->id}}" value="{{$c->number}}" min="1" style="width:30px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -390,18 +386,61 @@ function totalAll(){
     $('#J_ActualFee').text(total);
 }
 totalAll();
+function total(id,total){
+    $('#total'+id).text(total)
+}
 
 function createAdr(){
+    open("{{url('user/address/create')}}",'增加新地址');
+}
+
+function updateAdr(id){
+    open("{{url('user/address/update')}}/"+id,'修改地址');
+}
+
+function open(url,title){
     layer.open({
         type:2,
         area:['1000px','700px'],
         fixed:false,
         shadeClose:true,
-        title:'增加新地址',
-        content:"{{url('user/address/create')}}",
+        title:title,
+        content:url,
     });
 }
 
+function defaultAdr(id){
+    $.post("{{url('/user/address/default')}}/"+id,{'_token':"{{csrf_token()}}"},function(data){
+        if(data.s==1){
+            $('.deftip').remove();
+            $('li[type='+id+']').children('.address-left').append('<ins class="deftip">默认地址</ins>');
+        }else{
+            layer.msg(data.text,{icon:2});
+        }
+    })
+}
+
+function deleteAdr(id){
+    layer.confirm('确定要删除?',{icon:3,title:'提示'},function (index){
+        $.post("{{url('user/address/delete')}}/"+id,{'_token':"{{csrf_token()}}"},function(data){
+            if(data.s==1){
+                $('li[type='+id+']').remove();
+            }
+        });
+        layer.close(index);
+    })
+
+}
+$('input[name=number]').change(function(){
+   $.post("{{url('/cart/update')}}/"+$(this).attr('sno'),{'_token':"{{csrf_token()}}",'action':'number','value':$(this).val()},function(data){
+       if(data.s==1){
+           total(data.id,data.total);
+           totalAll();
+       }else{
+           layer.msg('系统遇到问题了!!!',{icon:2});
+       }
+   })
+});
 $('.user-addresslist').click(function(){
     $('.buy-footer-address').find('.province').text($(this).find('.province').text());
     $('.buy-footer-address').find('.city').text($(this).find('.city').text());
