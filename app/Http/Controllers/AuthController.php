@@ -112,6 +112,9 @@ class AuthController extends Controller
     public function showActivated()
     {
         $user=Auth::user();
+        if($user->activated==1){
+            return redirect()->back();
+        }
         return view('auth.activated',compact('user'));
     }
     /*

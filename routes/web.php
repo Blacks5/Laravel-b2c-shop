@@ -24,9 +24,11 @@ Route::get('register','AuthController@showRegister');
 Route::post('register','AuthController@register');
 
 Route::get('/show','AuthController@show');
+
+/* 用户激活 */
 Route::group(['middleware'=>'auth'],function(){
     Route::get('user/activated','AuthController@showActivated');
-    Route::get('user/{id}/{token}','AuthController@activated');
+    Route::get('activated/{id}/{token}','AuthController@activated');
     Route::post('user/resend','AuthController@reSend');
 });
 
@@ -39,6 +41,15 @@ Route::group(['middleware'=>'user'],function(){
 
     Route::post('/pay/create','PayController@create');
     Route::get('/pay/{id}','PayController@index');
+
+
+    Route::get('user','User\UserController@index');
+    Route::get('user/info','User\UserController@info');
+    Route::post('user/info/update','User\UserController@infoUpdate');
+    Route::get('user/safety','User\UserController@safety');
+    Route::get('user/password','User\UserController@password');
+    Route::post('user/password','User\UserController@password');
+    Route::get('user/address','User\UserController@address');
 
 
     /* user address */

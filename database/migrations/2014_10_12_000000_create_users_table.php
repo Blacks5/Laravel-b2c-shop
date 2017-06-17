@@ -18,6 +18,13 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('img')->default('images/getAvatar.do.jpg');
+            $table->string('nick_name')->nullable();
+            $table->integer('sex')->nullable();
+            $table->integer('bron_year')->nullable();
+            $table->integer('bron_m')->nullbale();
+            $table->integer('bron_d')->nullable();
+            $table->integer('phone')->nullable();
             $table->integer('activated')->dufault(0);
             $table->string('emailToken');
             $table->integer('type')->default(1);
