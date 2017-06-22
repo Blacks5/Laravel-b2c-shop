@@ -51,6 +51,12 @@ Route::group(['middleware'=>'user'],function(){
     Route::post('user/password','User\UserController@password');
     Route::get('user/address','User\UserController@address');
 
+    Route::get('user/order','User\OrderController@index');
+    Route::get('user/orderinfo/{oid}','User\OrderController@orderInfo');
+    Route::get('user/order/repay/{oid}','PayController@repay');
+    Route::get('user/order/refund/{id}','User\OrderController@refund');
+    Route::get('user/order/express/{oid}','User\OrderController@getExpress');
+
 
     /* user address */
     Route::get('/user/address/create','User\AddressController@create');
@@ -62,6 +68,7 @@ Route::group(['middleware'=>'user'],function(){
 
     Route::get('/pay/{id}','PayController@index');
     Route::get('/pay/{pay}/{address}/{goods}','PayController@pay');
+    Route::post('/pay/add','PayController@payAdd');
     Route::post('/pay/return','PayController@webReturn');
 });
 

@@ -237,7 +237,7 @@
                 <div class="order-user-info">
                     <div id="holyshit257" class="memo">
                         <label>买家留言：</label>
-                        <input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
+                        <input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close" name="remake">
                         <div class="msg hidden J-msg">
                             <p class="error">最多输入500个字符</p>
                         </div>
@@ -337,9 +337,18 @@
                 </div>
 
                 <div id="holyshit269" class="submitOrder">
-                    <div class="go-btn-wrap">
-                        <a id="J_Go" href="javascript:;" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
-                    </div>
+                    <form method="post" action="{{url('pay/add')}}" id="payAdd">
+                        {!! csrf_field() !!}
+                        <div class="go-btn-wrap">
+                            <input name="goods" type="hidden">
+                            <input name="address" type="hidden">
+                            <input name="pay" type="hidden">
+                            <input name="remake" type="hidden">
+                            <input name="postage" type="hidden">
+                            <a id="J_Go" class="btn-go" tabindex="0" title="点击此按钮，提交订单" onclick="add()">提交订单</a>
+                        </div>
+                    </form>
+
                 </div>
                 <div class="clear"></div>
             </div>
@@ -449,8 +458,15 @@ $('.user-addresslist').click(function(){
     $('.buy-footer-address').find('.buy-phone').text($(this).find('.buy-phone').text());
     $('.buy-footer-address').find('.dist').text($(this).find('.dist').text());
 })
-$('#J_Go').click(function(){
-   window.location.href="{{url('pay')}}/"+$('.selected').attr('type')+'/'+$('.defaultAddr').attr('type')+'/'+'{{$id}}';
-});
+function add(obj){
+   //window.location.href="{{url('pay')}}/"+$('.selected').attr('type')+'/'+$('.defaultAddr').attr('type')+'/'+'{{$id}}';
+   $('input[name=goods]').val("{{$id}}");
+   $('input[name=address]').val($('.defaultAddr').attr('type'));
+   $('input[name=pay]').val($('.selected').attr('type'));
+   $('input[name=remake]').val($('input[name=remake]').val());
+   $('input[name=postage]').val(10);
+   $('#payAdd').submit();
+
+};
 </script>
 </html>
