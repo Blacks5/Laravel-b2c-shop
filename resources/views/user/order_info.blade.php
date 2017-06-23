@@ -121,7 +121,7 @@
                     <div class="order-status3">
                         <div class="order-title">
                             <div class="dd-num">订单编号：<a href="javascript:;">{{$order->order_number}}</a></div>
-                            <span>成交时间：{{$order->create_at}}</span>
+                            <span>成交时间：{{$order->created_at}}</span>
                             <!--    <em>店铺：小桔灯</em>-->
                         </div>
                         <div class="order-content">
@@ -165,7 +165,7 @@
                             <div class="order-right">
                                 <li class="td td-amount">
                                     <div class="item-amount">
-                                        合计：{{$order->total}}
+                                        合计：{{$order->pay_number}}
                                         <p>含运费：<span>{{$order->postage}}</span></p>
                                     </div>
                                 </li>
@@ -183,8 +183,8 @@
                                         </div>
                                     </li>
                                     <li class="td td-change">
-                                        @if($order->state==1)<div class="am-btn am-btn-danger anniu">去付款</div>@endif
-                                        @if($order->state==2)<div class="am-btn am-btn-danger anniu">提醒发货</div>@endif
+                                        @if($order->state==1)<a href="{{url('user/order/repay',['oid'=>$order->order_number])}}" class="am-btn am-btn-danger anniu">去付款</a>@endif
+                                        @if($order->state==2)<div class="am-btn am-btn-danger anniu" onclick="remind({{$order->id}})">提醒发货</div>@endif
                                         @if($order->state==3)<div class="am-btn am-btn-danger anniu">确认收货</div>@endif
                                         @if($order->state==4)<div class="am-btn am-btn-danger anniu">评价</div>@endif
                                     </li>
@@ -198,4 +198,15 @@
         </div>
 
     </div>
+@endsection
+
+@section('js')
+<script>
+layui.use('layer',function(){var layer=layui.layer});
+function remind(id){
+    $.post("{{url('user/order/remind')}}",{'_token':"{{csrf_token()}}",'oid':id},function(data){
+        layer.msg(data.text);
+    })
+}
+</script>
 @endsection

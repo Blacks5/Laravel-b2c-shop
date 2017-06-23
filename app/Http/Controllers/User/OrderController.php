@@ -38,10 +38,48 @@ class OrderController extends Controller
     public function refund($id)
     {
         $goods  =   Order_goods::where('id',$id)->where('uid',Auth::id())->first();
+        $goods->order_state =   Order::where('order_number',$goods->oid)->value('state');
 
         return view('user.order_refund',compact('goods'));
     }
 
+    /*  申请退款/退货  Ajax */
+    public function refundAjax(Request $request)
+    {
+        $goods  =   Order_goods::where('id',$request->input('id'))->where('uid',Auth::id())->first();
+        $goods->refund  =   1;
+        $goods->state   =   1;
+        $goods->refund_no   =   date('Ymdhis');
+        $goods->refund_time =   date('Y-m-d h:i:s',time());
+        $goods->refund_type =   $request->input('type');
+        $goods->refund_reason   =   $request->input('reason');
+        $goods->refund_price    =   $goods->total;
+        $goods->refund_info =   $request->input('info');
+        $goods->refund_img  =   $request->input('img');
+        dd( $goods);
+        if($goods->save()){
+            return ['s'=>1,'text'=>'申请'.$request->input('type').'成功!'];
+        }
+        return ['s'=>0,'text'=>'申请'.$request->input('type').'失败!'];
+    }
+
+    /*  退款售后 页面 */
+    public function change()
+    {
+        $goods  =   Order_goods::where('refund','1')->where('uid',Auth::id())->get();
+
+        return view('user.order_change',compact('goods'));
+    }
+
+    /*  退款收货 详情*/
+    public function record($id)
+    {
+        $goods  =   Order_goods::findOrFail($id);
+
+        return view('user.order_record',compact('goods'));
+    }
+
+    /*  快递详情页   */
     public function getExpress($oid)
     {
         $order  =   Order::where('order_number',$oid)->first();
@@ -50,5 +88,35 @@ class OrderController extends Controller
         $data->post_name  =   $order->post_name;
 
         return view('user.order_express',compact('data'));
+    }
+
+    /*  提醒发货    */
+    public function remind(Request $request)
+    {
+        $order  =   Order::findOrFail($request->input('oid'));
+        $order->remind  =   1;
+        if($order->save()){
+            return ['s'=>1,'text'=>'提醒发货成功!'];
+        }
+        return ['s'=>0,'text'=>'提醒发货失败!'];
+    }
+
+    /*  确认收货    */
+    public function confirm(Request $request)
+    {
+        $order  =   Order::findOrFail($request->input('id'));
+        $order->state   =   4;
+        if($order->save()){
+            return ['s'=>1,'text'=>'确认收货成功!'];
+        }
+        return ['s'=>0,'text'=>'确认收货失败!'];
+    }
+
+    /*  评价订单 页面    */
+    public function commentList($oid)
+    {
+        $goods   =   Order_goods::where('oid',$oid)->where('uid',Auth::id())->get();
+
+        return view('user.order_commentList',compact('goods'));
     }
 }

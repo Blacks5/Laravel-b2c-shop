@@ -103,7 +103,7 @@
                                         <div class="order-right">
                                             <li class="td td-amount">
                                                 <div class="item-amount">
-                                                    合计：{{$o->total}}
+                                                    合计：{{$o->pay_number}}
                                                     <p>含运费：<span>{{$o->postage}}</span></p>
                                                 </div>
                                             </li>
@@ -124,9 +124,9 @@
                                                 </li>
                                                 <li class="td td-change">
                                                     @if($o->state==1)<a href="{{url('user/order/repay',['oid'=>$o->order_number])}}" class="am-btn am-btn-danger anniu">去付款</a>@endif
-                                                    @if($o->state==2)<div class="am-btn am-btn-danger anniu">提醒发货</div>@endif
+                                                    @if($o->state==2)<div class="am-btn am-btn-danger anniu" onclick="remind({{$o->id}})">提醒发货</div>@endif
                                                     @if($o->state==3)<div class="am-btn am-btn-danger anniu">确认收货</div>@endif
-                                                    @if($o->state==4)<div class="am-btn am-btn-danger anniu">评价</div>@endif
+                                                    @if($o->state==4)<a href="{{url('user/order/comment',['oid'=>$o->order_number])}}" class="am-btn am-btn-danger anniu">评价</a>@endif
                                                 </li>
                                             </div>
                                         </div>
@@ -216,7 +216,7 @@
                                             <div class="order-right">
                                                 <li class="td td-amount">
                                                     <div class="item-amount">
-                                                        合计：{{$o->total}}
+                                                        合计：{{$o->pay_number}}
                                                         <p>含运费：<span>{{$o->postage}}</span></p>
                                                     </div>
                                                 </li>
@@ -237,7 +237,7 @@
                                                     </li>
                                                     <li class="td td-change">
                                                         @if($o->state==1)<a href="{{url('user/order/repay',['oid'=>$o->order_number])}}" class="am-btn am-btn-danger anniu">去付款</a>@endif
-                                                        @if($o->state==2)<div class="am-btn am-btn-danger anniu">提醒发货</div>@endif
+                                                        @if($o->state==2)<div class="am-btn am-btn-danger anniu" onclick="remind({{$o->id}})">提醒发货</div>@endif
                                                         @if($o->state==3)<div class="am-btn am-btn-danger anniu">确认收货</div>@endif
                                                         @if($o->state==4)<div class="am-btn am-btn-danger anniu">评价</div>@endif
                                                     </li>
@@ -328,7 +328,7 @@
                                             <div class="order-right">
                                                 <li class="td td-amount">
                                                     <div class="item-amount">
-                                                        合计：{{$o->total}}
+                                                        合计：{{$o->pay_number}}
                                                         <p>含运费：<span>{{$o->postage}}</span></p>
                                                     </div>
                                                 </li>
@@ -349,7 +349,7 @@
                                                     </li>
                                                     <li class="td td-change">
                                                         @if($o->state==1)<a href="{{url('user/order/repay',['oid'=>$o->order_number])}}" class="am-btn am-btn-danger anniu">去付款</a>@endif
-                                                        @if($o->state==2)<div class="am-btn am-btn-danger anniu">提醒发货</div>@endif
+                                                        @if($o->state==2)<div class="am-btn am-btn-danger anniu" onclick="remind({{$o->id}})">提醒发货</div>@endif
                                                         @if($o->state==3)<div class="am-btn am-btn-danger anniu">确认收货</div>@endif
                                                         @if($o->state==4)<div class="am-btn am-btn-danger anniu">评价</div>@endif
                                                     </li>
@@ -440,7 +440,7 @@
                                                 <div class="order-right">
                                                     <li class="td td-amount">
                                                         <div class="item-amount">
-                                                            合计：{{$o->total}}
+                                                            合计：{{$o->pay_number}}
                                                             <p>含运费：<span>{{$o->postage}}</span></p>
                                                         </div>
                                                     </li>
@@ -461,7 +461,7 @@
                                                         </li>
                                                         <li class="td td-change">
                                                             @if($o->state==1)<a href="{{url('user/order/repay',['oid'=>$o->order_number])}}" class="am-btn am-btn-danger anniu">去付款</a>@endif
-                                                            @if($o->state==2)<div class="am-btn am-btn-danger anniu">提醒发货</div>@endif
+                                                            @if($o->state==2)<div class="am-btn am-btn-danger anniu" onclick="remind({{$o->id}})">提醒发货</div>@endif
                                                             @if($o->state==3)<div class="am-btn am-btn-danger anniu">确认收货</div>@endif
                                                             @if($o->state==4)<div class="am-btn am-btn-danger anniu">评价</div>@endif
                                                         </li>
@@ -553,7 +553,7 @@
                                                 <div class="order-right">
                                                     <li class="td td-amount">
                                                         <div class="item-amount">
-                                                            合计：{{$o->total}}
+                                                            合计：{{$o->pay_number}}
                                                             <p>含运费：<span>{{$o->postage}}</span></p>
                                                         </div>
                                                     </li>
@@ -574,9 +574,9 @@
                                                         </li>
                                                         <li class="td td-change">
                                                             @if($o->state==1)<a href="{{url('user/order/repay',['oid'=>$o->order_number])}}" class="am-btn am-btn-danger anniu">去付款</a>@endif
-                                                            @if($o->state==2)<div class="am-btn am-btn-danger anniu">提醒发货</div>@endif
+                                                            @if($o->state==2)<div class="am-btn am-btn-danger anniu" onclick="remind({{$o->id}})">提醒发货</div>@endif
                                                             @if($o->state==3)<div class="am-btn am-btn-danger anniu">确认收货</div>@endif
-                                                            @if($o->state==4)<div class="am-btn am-btn-danger anniu">评价</div>@endif
+                                                            @if($o->state==4)<a href="{{url('user/order/comment',['oid'=>$o->order_number])}}" class="am-btn am-btn-danger anniu">评价</a>@endif
                                                         </li>
                                                     </div>
                                                 </div>
@@ -594,4 +594,15 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+<script>
+    layui.use('layer',function(){var layer=layui.layer});
+    function remind(id){
+        $.post("{{url('user/order/remind')}}",{'_token':"{{csrf_token()}}",'oid':id},function(data){
+            layer.msg(data.text);
+        })
+    }
+</script>
 @endsection

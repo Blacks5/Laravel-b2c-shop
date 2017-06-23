@@ -56,6 +56,12 @@ Route::group(['middleware'=>'user'],function(){
     Route::get('user/order/repay/{oid}','PayController@repay');
     Route::get('user/order/refund/{id}','User\OrderController@refund');
     Route::get('user/order/express/{oid}','User\OrderController@getExpress');
+    Route::post('user/order/remind','User\OrderController@remind');
+    Route::post('user/order/refund','User\OrderController@refundAjax');
+    Route::get('user/order/change','User\OrderController@change');
+    Route::get('user/order/change/record/{id}','User\OrderController@record');
+    Route::post('user/order/confirm','User\OrderController@confirm');
+    Route::get('user/order/comment/{oid}','User\OrderController@commentList');
 
 
     /* user address */

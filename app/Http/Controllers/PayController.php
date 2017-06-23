@@ -47,7 +47,7 @@ class PayController extends Controller
         $item['name']   =   $address->name;
         $item['phone']  =   $address->phone;
         $item['total']  =   $this->total($item['goods']);
-        $item['order_number']   =   date('Ymd',time().rand(1000,999));
+        $item['order_number']   =   date('Ymdhis').rand(1000,9999);
         $item['remake'] =   $request->input('remake');
         $item['postage']=   $request->input('postage');
         $item['pay_way']=   $request->input('pay');

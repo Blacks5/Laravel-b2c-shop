@@ -3,6 +3,10 @@
 <title>用户中心</title>
 @endsection
 
+@section('css')
+    <link href="{{asset('css/vipstyle.css')}}" rel="stylesheet" type="text/css">
+    @endsection
+
 @section('body')
     <div class="main-wrap">
         <div class="wrap-left">

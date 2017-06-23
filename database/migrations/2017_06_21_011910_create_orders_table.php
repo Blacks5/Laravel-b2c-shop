@@ -27,6 +27,7 @@ class CreateOrdersTable extends Migration
             $table->string('post_code')->nullable();
             $table->string('post_name')->nullable();
             $table->string('remake')->nullable();
+            $table->integer('remind')->default(0);
             $table->string('pay_way')->default('支付宝');
             $table->integer('pay_number')->default(0);
             $table->softDeletes();
