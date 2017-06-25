@@ -57,6 +57,7 @@
                         <li><i class="op3"></i>差评</li>
                     </div>
                 </div>
+                    <input type="hidden" name="gid{{$key}}" value="{{$g->id}}">
                 @endforeach
                 <div class="info-btn">
                     <div class="am-btn am-btn-danger" onclick="addComment()">发表评论</div>
@@ -80,11 +81,21 @@
 <script>
 layui.use('layer',function(){var layer=layui.layer;});
 function addComment(){
+    var score=new Array(),text=new Array(),id=new Array(),img=new Array();
     for(var i=0;i<$('.comment-list').length;i++){
-        var score=$('#goods'+i).find('.active').parent('li').text();
-        var text=$('#text'+i).val();
-        alert(text)
+        score[i]=$('#goods'+i).find('.active').parent('li').text();
+        text[i]=$('#text'+i).val();
+        id[i]=$('input[name=gid'+i+']').val();
+        img[i]=1;
+
     }
+    $.post("{{url('user/order/comment')}}",{'_token':"{{csrf_token()}}",'oid':id,'score':score,'text':text,'img':img},function (data) {
+        if(data.s==1){
+            layer.msg('增加评论成功!');
+            window.location.href="{{url('user/order/commentlist')}}";
+        }
+    })
+
 }
 </script>
 @endsection

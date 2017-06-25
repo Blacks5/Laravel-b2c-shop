@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Api\Express;
+use App\Comment;
 use App\Order;
 use App\Order_goods;
 use Illuminate\Http\Request;
@@ -116,7 +117,42 @@ class OrderController extends Controller
     public function commentList($oid)
     {
         $goods   =   Order_goods::where('oid',$oid)->where('uid',Auth::id())->get();
+        if(Comment::where('oid',$goods[0]->id)->get()){
+            return redirect('user/order/commentlist');
+        }
 
         return view('user.order_commentList',compact('goods'));
+    }
+
+    /*  增加评论    */
+    public function commentAdd(Request $request)
+    {
+        $data   =   $request->all();
+        $item   =   0;
+        foreach ($request->input('oid') as  $key => $d){
+            $order  =   Order_goods::findOrFail($data['oid'][$key]);
+            $comment    = new Comment();
+            $comment->uid  =   Auth::id();
+            $comment->gid =   $order->gid;
+            $comment->oid   =   $data['oid'][$key];
+            $comment->score =   $data['score'][$key];
+            $comment->content  =   $data['text'][$key];
+            $comment->img   =   $data['img'][$key];
+            if($comment->save()){
+                $item+=1;
+            }
+        }
+
+        if($item==count($request->input('oid'))){
+            return ['s'=>1,'text'=>'增加评论成功!'];
+        }
+        return ['s'=>0,'text'=>'增加评论失败'];
+    }
+
+    public function comment()
+    {
+        $comment    =   new Comment();
+        $comments  =   $comment->userComment(Auth::id());
+        return view('user.order_comment',compact('comments'));
     }
 }

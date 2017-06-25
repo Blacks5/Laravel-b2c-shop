@@ -62,6 +62,8 @@ Route::group(['middleware'=>'user'],function(){
     Route::get('user/order/change/record/{id}','User\OrderController@record');
     Route::post('user/order/confirm','User\OrderController@confirm');
     Route::get('user/order/comment/{oid}','User\OrderController@commentList');
+    Route::post('user/order/comment','User\OrderController@commentAdd');
+    Route::get('user/order/commentlist','User\OrderController@comment');
 
 
     /* user address */

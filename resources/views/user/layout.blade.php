@@ -134,7 +134,7 @@
                 <ul>
                     <li><a href="{{url('user/order')}}">订单管理</a></li>
                     <li> <a href="{{url('user/order/change')}}">退款售后</a></li>
-                    <li> <a href="{{url('user/order/comment')}}">评价商品</a></li>
+                    <li> <a href="{{url('user/order/commentlist')}}">评价商品</a></li>
                 </ul>
             </li>
             <li class="person">
