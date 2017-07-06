@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ad;
 use App\Goods;
 use App\Type;
 use App\User;
@@ -28,8 +29,10 @@ class HomeController extends Controller
     public function index()
     {
         $type=Type::with('childrenType')->get();
+        $lunbo =    Ad::where('position_id','1')->where('enable','1')->get();
+        $topNav =   Ad::where('position_id','3')->where('enable','1')->get();
         $goods=Goods::all();
-        return view('home.index',compact('type'));
+        return view('home.index',compact('type','lunbo','topNav'));
     }
 
     public function goodsList(Request $request,$id)

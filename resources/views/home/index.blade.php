@@ -24,21 +24,28 @@
     <div class="am-container header">
         <ul class="message-l">
             <div class="topMessage">
+                @if(Auth::check())
                 <div class="menu-hd">
-                    <a href="#" target="_top" class="h">亲，请登录</a>
-                    <a href="#" target="_top">免费注册</a>
+                    <a href="{{url('/user')}}" target="_top" class="h">欢迎您 {{Auth::user()->name}}</a>
+                    <a href="{{url('loginout')}}">退出</a>
                 </div>
+                @else
+                <div class="menu-hd">
+                    <a href="{{url('login')}}" target="_top" class="h">亲，请登录</a>
+                    <a href="{{url('register')}}" target="_top">免费注册</a>
+                </div>
+                @endif
             </div>
         </ul>
         <ul class="message-r">
             <div class="topMessage home">
-                <div class="menu-hd"><a href="#" target="_top" class="h">商城首页</a></div>
+                <div class="menu-hd"><a href="{{url('/')}}" target="_top" class="h">商城首页</a></div>
             </div>
             <div class="topMessage my-shangcheng">
-                <div class="menu-hd MyShangcheng"><a href="#" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
+                <div class="menu-hd MyShangcheng"><a href="{{url('/user')}}" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
             </div>
             <div class="topMessage mini-cart">
-                <div class="menu-hd"><a id="mc-menu-hd" href="#" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
+                <div class="menu-hd"><a id="mc-menu-hd" href="{{url('/cart')}}" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
             </div>
             <div class="topMessage favorite">
                 <div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
@@ -48,9 +55,9 @@
     <!--悬浮搜索框-->
 
     <div class="nav white">
-        <div class="logo"><img src="../images/logo.png" /></div>
+        <div class="logo"><img src="{{asset('images/logo.png')}}" /></div>
         <div class="logoBig">
-            <li><img src="../images/logobig.png" /></li>
+            <li><img src="{{asset('images/logobig.png')}}" /></li>
         </div>
 
         <div class="search-bar pr">
@@ -68,11 +75,9 @@
     <!--轮播 -->
     <div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
         <ul class="am-slides">
-            <li class="banner1"><a href="introduction.html"><img src="../images/ad1.jpg" /></a></li>
-            <li class="banner2"><a><img src="../images/ad2.jpg" /></a></li>
-            <li class="banner3"><a><img src="../images/ad3.jpg" /></a></li>
-            <li class="banner4"><a><img src="../images/ad4.jpg" /></a></li>
-
+            @foreach($lunbo as $key => $l)
+            <li class="banner{{$key+1}}"><a href="{{$l->link}}"><img src="{{asset($l->code)}}" alt="{{$l->name}}"/></a></li>
+            @endforeach
         </ul>
     </div>
     <div class="clear"></div>
@@ -84,11 +89,10 @@
         <div class="long-title"><span class="all-goods">全部分类</span></div>
         <div class="nav-cont">
             <ul>
-                <li class="index"><a href="#">首页</a></li>
-                <li class="qc"><a href="#">闪购</a></li>
-                <li class="qc"><a href="#">限时抢</a></li>
-                <li class="qc"><a href="#">团购</a></li>
-                <li class="qc last"><a href="#">大包装</a></li>
+                <li class="index"><a href="{{url('/')}}">首页</a></li>
+                @foreach($topNav as $key => $t)
+                <li class="qc"><a href="{{$t->link}}" rel="{{$t->name}}">{{$t->code}}</a></li>
+                @endforeach
             </ul>
             <div class="nav-extra">
                 <i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
@@ -205,25 +209,37 @@
                         </a></li>
 
                     <div class="mod-vip">
+                        @if(Auth::check())
                         <div class="m-baseinfo">
-                            <a href="../person/index.html">
-                                <img src="../images/getAvatar.do.jpg">
+                            <a href="{{url('/user')}}">
+                                <img src="{{asset(Auth::user()->img)}}">
                             </a>
                             <em>
-                                Hi,<span class="s-name">小叮当</span>
+                                Hi,<span class="s-name">{{Auth::user()->name}}</span>
+                                <a href="#"><p>点击更多优惠活动</p></a>
+                            </em>
+                        </div>
+                            <div class="member-login" style="display: block">
+                                <a href="#"><strong>0</strong>待收货</a>
+                                <a href="#"><strong>0</strong>待发货</a>
+                                <a href="#"><strong>0</strong>待付款</a>
+                                <a href="#"><strong>0</strong>待评价</a>
+                            </div>
+                        @else
+                        <div class="m-baseinfo">
+                            <a href="{{url('/login')}}">
+                                <img src="{{asset(Auth::user()->img)}}">
+                            </a>
+                            <em>
+                                Hi,<span class="s-name">{{Auth::user()->name}}</span>
                                 <a href="#"><p>点击更多优惠活动</p></a>
                             </em>
                         </div>
                         <div class="member-logout">
-                            <a class="am-btn-warning btn" href="login.html">登录</a>
-                            <a class="am-btn-warning btn" href="register.html">注册</a>
+                            <a class="am-btn-warning btn" href="{{url('/login')}}">登录</a>
+                            <a class="am-btn-warning btn" href="{{url('/register')}}">注册</a>
                         </div>
-                        <div class="member-login">
-                            <a href="#"><strong>0</strong>待收货</a>
-                            <a href="#"><strong>0</strong>待发货</a>
-                            <a href="#"><strong>0</strong>待付款</a>
-                            <a href="#"><strong>0</strong>待评价</a>
-                        </div>
+                        @endif
                         <div class="clear"></div>
                     </div>
 

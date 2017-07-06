@@ -33,13 +33,17 @@ var navs = [{
 		"href": "paging.html"
 	}]
 }, {
-	"title": "第三方组件",
-	"icon": "&#x1002;",
+	"title": "广告管理",
+	"icon": "&#xe634;",
 	"spread": false,
 	"children": [{
-		"title": "iCheck组件",
-		"icon": "fa-check-square-o",
-		"href": "icheck.html"
+		"title": "广告位管理",
+		"icon": "&#xe61d",
+		"href": "admin/ad/position"
+	},{
+		"title":"广告管理",
+		"icon":"&#xe635",
+		"href":"admin/ad"
 	}]
 }, {
 	"title": "地址本",

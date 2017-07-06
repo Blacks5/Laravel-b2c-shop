@@ -108,6 +108,15 @@ Route::group(['prefix'=>'admin','middleware'=>'admin'],function(){
     ROute::post('goods/type/destroy/{id}','Admin\GoodsTypeController@destroy');
     //Route::get('/goods/type/add','Admin\GoodsTypeController@add');
 
+    Route::get('/ad/position','Admin\PositionController@position');
+    Route::get('/ad/position/create','Admin\PositionController@create');
+    Route::post('/ad/position/create','Admin\PositionController@create');
+    Route::get('/ad/position/edit/{id}','Admin\PositionController@edit');
+    Route::post('/ad/position/update','Admin\PositionController@update');
+    Route::post('/ad/position/destroy/{id}','Admin\PositionController@destroy');
+
+    Route::resource('/ad','Admin\AdController');
+
     Route::get('/goods/add','Admin\GoodsController@create');
     Route::post('/goods/create','Admin\GoodsController@store');
     Route::get('goods/','Admin\GoodsController@index');

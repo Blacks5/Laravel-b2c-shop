@@ -126,7 +126,7 @@
                     <li> <a href="{{url('user/info')}}">个人信息</a></li>
                     <li> <a href="{{url('user/safety')}}">安全设置</a></li>
                     <li> <a href="{{url('user/address')}}">地址管理</a></li>
-                    <li> <a href="cardlist.html">快捷支付</a></li>
+                    <!--<li> <a href="cardlist.html">快捷支付</a></li>-->
                 </ul>
             </li>
             <li class="person">
@@ -137,6 +137,7 @@
                     <li> <a href="{{url('user/order/commentlist')}}">评价商品</a></li>
                 </ul>
             </li>
+            <!--
             <li class="person">
                 <p><i class="am-icon-dollar"></i>我的资产</p>
                 <ul>
@@ -155,7 +156,7 @@
                     <li> <a href="foot.html">足迹</a></li>
                 </ul>
             </li>
-
+            -->
             <li class="person">
                 <p><i class="am-icon-qq"></i>在线客服</p>
                 <ul>
