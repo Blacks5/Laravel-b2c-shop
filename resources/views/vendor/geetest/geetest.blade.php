@@ -1,5 +1,5 @@
 <script src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
-<script src="http://static.geetest.com/static/tools/gt.js"></script>
+<script src="{{asset('js/geetest.js')}}"></script>
 <div id="geetest-captcha"></div>
 <p id="wait" class="show">正在加载验证码...</p>
 <script>
