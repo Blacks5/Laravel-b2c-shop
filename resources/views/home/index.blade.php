@@ -75,7 +75,7 @@
     <!--轮播 -->
     <div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
         <ul class="am-slides">
-            @foreach($lunbo as $key => $l)
+            @foreach($lb as $key => $l)
             <li class="banner{{$key+1}}"><a href="{{$l->link}}"><img src="{{asset($l->code)}}" alt="{{$l->name}}"/></a></li>
             @endforeach
         </ul>
@@ -90,7 +90,7 @@
         <div class="nav-cont">
             <ul>
                 <li class="index"><a href="{{url('/')}}">首页</a></li>
-                @foreach($topNav as $key => $t)
+                @foreach($nav as $key => $t)
                 <li class="qc"><a href="{{$t->link}}" rel="{{$t->name}}">{{$t->code}}</a></li>
                 @endforeach
             </ul>
@@ -228,10 +228,10 @@
                         @else
                         <div class="m-baseinfo">
                             <a href="{{url('/login')}}">
-                                <img src="{{asset(Auth::user()->img)}}">
+                                <img src="">
                             </a>
                             <em>
-                                Hi,<span class="s-name">{{Auth::user()->name}}</span>
+                                Hi,<span class="s-name">请登录</span>
                                 <a href="#"><p>点击更多优惠活动</p></a>
                             </em>
                         </div>

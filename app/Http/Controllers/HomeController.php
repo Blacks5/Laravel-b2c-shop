@@ -29,10 +29,10 @@ class HomeController extends Controller
     public function index()
     {
         $type=Type::with('childrenType')->get();
-        $lunbo =    Ad::where('position_id','1')->where('enable','1')->get();
-        $topNav =   Ad::where('position_id','3')->where('enable','1')->get();
-        $goods=Goods::all();
-        return view('home.index',compact('type','lunbo','topNav'));
+        $lb =    Ad::where('position_id','1')->where('enable','1')->get();
+        $nav =   Ad::where('position_id','3')->where('enable','1')->get();
+
+        return view('home.index',compact('type','lb','nav'));
     }
 
     public function goodsList(Request $request,$id)
