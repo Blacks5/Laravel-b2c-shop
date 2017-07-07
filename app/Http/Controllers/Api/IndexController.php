@@ -16,8 +16,9 @@ class IndexController extends Controller
     public function index()
     {
         $data['lbt'] = $this->getAd(1);
-        $data['new']  =  Goods::where('show',1)->orderBy('created_at','desc')->limit(10)->get(['name','sale','imgs']);
-        $data['type']   =   $this->getType();
+        $data['new']  =  $this->getGoods('created_at');
+        $data['sales']   =   $this->getGoods('saleNum');
+        $data['price']  =   $this->getGoods('sale');
 
         return response()->json($data);
     }
@@ -47,14 +48,17 @@ class IndexController extends Controller
         return $data;
     }
 
-    protected function getGoods()
+    protected function getGoods($order)
     {
-        $type    =   Type::where('pid',0)->where('show',1)->get(['id','name']);
-        return $type;
+        $goods    =   Goods::where('show',1)->orderBy($order,'desc')->limit(10)->get(['id','name','sale','imgs','price']);;
+        return $this->changeGoodsImg($goods);
     }
 
-    protected function getType(){
-        $goods  =   Goods::where('type','15')->get();
-        return $goods;
+    protected function changeGoodsImg($data){
+        foreach ($data as $key => $d){
+            $img    =   explode(',',$d->imgs);
+            $data[$key]['imgs'] =   env('APP_URL').'/'.$img[0];
+        }
+        return $data;
     }
 }
