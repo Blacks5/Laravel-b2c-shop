@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/index','Api\IndexController@index');
 Route::get('/goods/{id}','Api\GoodsController@index');
+ROute::post('/cart','Api\CartController@index');
