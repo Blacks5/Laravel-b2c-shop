@@ -14,7 +14,7 @@ class CartController extends Controller
         $goods  =   Goods::findOrFail($request->input('id'));
         $goods->imgs    =   explode(',',$goods->imgs);
 
-        $user   =   Auth::login(2);
+        $user   =   Auth::loginUsingId(2);
         if($car=Cart::where('uid',$user)->where('gid',$goods->id)->where('info',$request->input('info'))->first()){
             $num=$car->number+$request->input('number');
             $cart=Cart::find($car->id);
