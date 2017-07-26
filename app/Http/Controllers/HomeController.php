@@ -42,20 +42,18 @@ class HomeController extends Controller
             Cache::put('indexType',$type,$this->expiresAt);
         }
         //if no lb cache then add
-        if(Cache::has('indexLb')){
+        if(!Cache::has('indexLb')){
             $lb =   Ad::where('position_id','1')->where('enable','1')->get();
             Cache::put('indexLb',$lb,$this->expiresAt);
         }
         //if no nav cache then add
-        if(Cache::has('indexNav')){
+        if(!Cache::has('indexNav')){
             $nav    =    Ad::where('position_id','3')->where('enable','1')->get();
             Cache::put('indexNav',$nav,$this->expiresAt);
         }
-
         $type   =   Cache::get('indexType');
         $lb     =   Cache::get('indexLb');
         $nav    =   Cache::get('indexNav');
-
 
         return view('home.index',compact('type','lb','nav'));
     }
