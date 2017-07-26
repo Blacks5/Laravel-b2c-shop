@@ -324,7 +324,7 @@
                     <h3>每一道甜品都有一个故事</h3>
                     <div class="today-brands " style="right:0px ;top:13px;">
                         @foreach($t->childrenType as $c)
-                        <a href="# ">{{$c->name}}</a>|
+                        <a href="{{url('list',['id'=>$c->id])}} ">{{$c->name}}</a>|
                         @endforeach
                     </div>
 
@@ -332,32 +332,35 @@
             </div>
 
             <div class="am-g am-g-fixed">
+                @foreach($t->goods as $gkey => $g)
+                    @if($gkey==0)
                 <div class="am-u-lg-5 big text-two">
                     <div class="outer-con ">
                         <div class="title ">
-                            雪之恋和风大福
+                            {{$g->name}}
                         </div>
                         <div class="sub-title ">
-                            ¥13.8
+                            {{$g->sale}}
                         </div>
 
                     </div>
-                    <a href="# "><img src="../images/act1.png" /></a>
+                    <a href="{{url('goods',['id'=>$g->id])}} "><img src="{{asset(explode(',',$g->imgs)[0])}}" /></a>
                 </div>
                 <div class="am-u-lg-7">
-                @for($i=0;$i<8;$i++)
+                    @else
                 <div class="am-u-md-3 am-u-lg-3 am-u-sm-6">
                     <div class="am-thumbnail index-goods">
-                        <a href="#">
-                            <img src="../images/1.jpg " alt=""/>
+                        <a href="{{url('goods',['id'=>$g->id])}}">
+                            <img src="{{asset(explode(',',$g->imgs)[0])}} " alt=""/>
                             <div class="am-thumbnail-caption am-center">
-                                <p class="goods-title">小优布丁小优布丁小优布丁小优布丁小优布丁小优布丁</p>
-                                <p style="color:#f10214;">¥<span class="goods-sole">38.00</span> <span class="goods-price"><del>¥12.00</del></span></p>
+                                <p class="goods-title">{{$g->name}}</p>
+                                <p style="color:#f10214;">¥<span class="goods-sole">{{$g->sale}}.00</span> <span class="goods-price"><del>¥{{$g->price}}</del></span></p>
                             </div>
                         </a>
                     </div>
                 </div>
-                @endfor
+                    @endif
+                    @endforeach
                 </div>
             </div>
 
@@ -394,37 +397,39 @@
 
 <!--引导 -->
 <div class="navCir">
-    <li class="active"><a href="home2.html"><i class="am-icon-home "></i>首页</a></li>
+    <li class="active"><a href="{{url('/')}}"><i class="am-icon-home "></i>首页</a></li>
     <li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
-    <li><a href="shopcart.html"><i class="am-icon-shopping-basket"></i>购物车</a></li>
-    <li><a href="../person/index.html"><i class="am-icon-user"></i>我的</a></li>
+    <li><a href="{{url('cart')}}"><i class="am-icon-shopping-basket"></i>购物车</a></li>
+    <li><a href="{{url('user')}}"><i class="am-icon-user"></i>我的</a></li>
 </div>
 <!--菜单 -->
 <div class=tip>
     <div id="sidebar">
         <div id="wrap">
             <div id="prof" class="item ">
-                <a href="# ">
+                <a href="{{url('user')}} ">
                     <span class="setting "></span>
                 </a>
                 <div class="ibar_login_box status_login ">
+                    @if(Auth::check())
                     <div class="avatar_box ">
-                        <p class="avatar_imgbox "><img src="../images/no-img_mid_.jpg " /></p>
+                        <p class="avatar_imgbox "><img src="{{asset(Auth::user()->img)}}" /></p>
                         <ul class="user_info ">
-                            <li>用户名：sl1903</li>
+                            <li>用户名：{{Auth::user()->name}}</li>
                             <li>级&nbsp;别：普通会员</li>
                         </ul>
                     </div>
                     <div class="login_btnbox ">
-                        <a href="# " class="login_order ">我的订单</a>
+                        <a href="{{url('user/order')}} " class="login_order ">我的订单</a>
                         <a href="# " class="login_favorite ">我的收藏</a>
                     </div>
                     <i class="icon_arrow_white "></i>
+                        @endif
                 </div>
 
             </div>
             <div id="shopCart " class="item ">
-                <a href="# ">
+                <a href="{{url('cart')}} ">
                     <span class="message "></span>
                 </a>
                 <p>
@@ -433,7 +438,7 @@
                 <p class="cart_num ">0</p>
             </div>
             <div id="asset " class="item ">
-                <a href="# ">
+                <a href="{{url('user')}} ">
                     <span class="view "></span>
                 </a>
                 <div class="mp_tooltip ">
