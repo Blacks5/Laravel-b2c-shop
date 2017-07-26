@@ -10,11 +10,13 @@
 
 ##更新日志<br/>
 2017-06-16<br/>
-  <p>登录和注册页面增加极验证<p>
-  增加注册事件(Register->SendEmail),使用sendCloudy发送验证邮件
-  增加中间件User 区分用户是否通过邮件验证
-  
-  增加支付宝支付接口，用户登陆使用极验证
-  
-  增加小程序API
+<ul>
+ <li>登录和注册页面增加极验证</li>
+  <li>增加注册事件(Register->SendEmail),使用sendCloudy发送验证邮件</li>
+  <li>增加中间件User 区分用户是否通过邮件验证</li>  
+  <li>增加支付宝支付接口，用户登陆使用极验证</li>  
+  <li>增加小程序API</li>
+ </ul>
 
+2017-07-26</br>
+首页增加Cache缓存（Memcached)
