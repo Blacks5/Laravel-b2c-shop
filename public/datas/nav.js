@@ -46,26 +46,18 @@ var navs = [{
 		"href":"admin/ad"
 	}]
 }, {
-	"title": "地址本",
+	"title": "文章",
 	"icon": "fa-address-book",
 	"href": "",
 	"spread": false,
 	"children": [{
-		"title": "Github",
+		"title": "文章管理",
 		"icon": "fa-github",
-		"href": "https://www.github.com/"
+		"href": "admin/article"
 	}, {
-		"title": "QQ",
+		"title": "增加文章",
 		"icon": "fa-qq",
-		"href": "http://www.qq.com/"
-	}, {
-		"title": "Fly社区",
-		"icon": "&#xe609;",
-		"href": "http://fly.layui.com/"
-	}, {
-		"title": "新浪微博",
-		"icon": "fa-weibo",
-		"href": "http://weibo.com/"
+		"href": "admin/active/create"
 	}]
 }, {
 	"title": "这是一级导航",

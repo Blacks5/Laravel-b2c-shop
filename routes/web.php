@@ -25,6 +25,8 @@ Route::post('register','AuthController@register');
 
 Route::get('/show','AuthController@show');
 
+
+
 /* 用户激活 */
 Route::group(['middleware'=>'auth'],function(){
     Route::get('user/activated','AuthController@showActivated');
@@ -122,4 +124,9 @@ Route::group(['prefix'=>'admin','middleware'=>'admin'],function(){
     Route::get('goods/','Admin\GoodsController@index');
     Route::post('goods/update/{id}','Admin\GoodsController@update');
     Route::post('goods/destroy/{id}','Admin\GoodsController@destroy');
+
+    /*  Article */
+    Route::resource('/article','Admin\ArticleController');
+    /*  Article Type    */
+    Route::resource('/articleType','Admin\ArticleTypeController');
 });
