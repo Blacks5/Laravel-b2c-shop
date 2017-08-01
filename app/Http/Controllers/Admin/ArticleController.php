@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Article;
 use App\Article_type;
 use App\Http\Controllers\Controller;
+use App\Translate\Translate;
+use App\Translate\TranslateTitle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -16,7 +19,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $data   =   Article::all();
+        $data   =   Article::join('article_types as t',function ($jion){
+            $jion->on('articles.tid','=','t.id');
+        })->get();
 
         return view('admin.article.index',compact('data'));
     }
@@ -42,7 +47,11 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
-        Article::create($request->all());
+        $data   =   $request->all();
+        $to = new TranslateTitle();
+        $data['url']    =   $to->translateTitle($data['title']);
+        Article::create($data);
+
         return ['s'=>1,'text'=>'增加成功！'];
     }
 
@@ -65,7 +74,10 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data   =   Article::join('article_types','articles.tid','=','article_types.id')->where('url',$id)->get();
+        $type   = Article_type::with('child')->get();
+
+        return view('admin.article.edit',compact('data'));
     }
 
     /**

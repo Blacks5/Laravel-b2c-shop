@@ -18,10 +18,10 @@
                     <tr>
                         <th style="width: 30px;"><input type="checkbox" lay-filter="allselector" lay-skin="primary"></th>
                         <th>ID</th>
-                        <th>商品名称</th>
+                        <th>分类</th>
+                        <th>标题</th>
                         <th>显示/推荐</th>
-                        <th>售价</th>
-                        <th>库存</th>
+                        <th>链接名称</th>
                         <th>增加时间</th>
                         <th>操作</th>
                     </tr>
@@ -31,13 +31,13 @@
                         <tr id="{{$v->id}}">
                             <td><input type="checkbox" lay-skin="primary"></td>
                             <TD>{{$v->id}}</TD>
-                            <td ><a href="javascript:;" onclick="changeText(this,{{$v->id}})" value="name"><span>{{$v->name}}</span></a> </td>
+                            <td>{{$v->name}}</td>
+                            <td ><a href="javascript:;" onclick="edits({{$v->url}})"><span>{{$v->title}}</span></a> </td>
                             <td>
-                                <a href="javascript:;" onclick='changes(this,{{$v->id}},"show")'><i class="layui-icon" value="{{$v->show}}">{{$v->show==1?'&#xe618;':"&#x1007;" }}</i></a>
-                                <a href="javascript:;" onclick='changes(this,{{$v->id}},"recommend")'><i class="layui-icon" value="{{$v->recommend}}">{{$v->show==1?'&#xe618;':"&#x1007;" }}</i></a>
+                                <a href="javascript:;" onclick='changes(this,{{$v->id}},"show")'><i class="layui-icon" value="{{$v->enable}}">{{$v->enable==1?'&#xe618;':"&#x1007;" }}</i></a>
+                                <a href="javascript:;" onclick='changes(this,{{$v->id}},"recommend")'><i class="layui-icon" value="{{$v->recommend}}">{{$v->enable==1?'&#xe618;':"&#x1007;" }}</i></a>
                             </td>
-                            <td><a href="javascript:;" onclick="changeText(this,{{$v->id}})" value="price"><span>{{$v->price}}</span></a></td>
-                            <td><a href="javascript:;" onclick="changeText(this,{{$v->id}})" value="stock"><span>{{$v->stock}}</span></a></td>
+                            <td><a href="javascript:;" onclick="changeText(this,{{$v->id}})" value="price"><span>{{$v->url}}</span></a></td>
                             <td>{{$v->updated_at}}</td>
                             <td>
                                 <a href="javascript:;" data-name="item.name" data-opt="edit" class="layui-btn layui-btn-mini" onclick="add('{{$v->id}}')">增加子分类</a>
@@ -67,6 +67,11 @@
 
         function addType(){
             openUrl("{{url('admin/articleType')}}");
+        }
+
+        function edits(url){
+            var url="{{url('admin/article/')}}"+'url';
+            openUrl(url);
         }
 
         function openUrl(url){

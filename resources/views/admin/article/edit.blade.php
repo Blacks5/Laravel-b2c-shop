@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="input-field col s6">
                     <label for="name">文章标题:</label>
-                    <input type="text" class="validate" id="name">
+                    <input type="text" class="validate" id="name" value="{{$data.title}}">
                 </div>
             </div>
             <div class="row">
@@ -17,12 +17,13 @@
             <div class="row">
                 <div class="input-field col s6">
                     <label for="description">描述</label>
-                    <textarea id="description" class="materialize-textarea"></textarea>
+                    <textarea id="description" class="materialize-textarea">{{$data->description}}</textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s2" style="z-index: 50;">
                     <select id="type" >
+                        <option value="{{$data->tid}}" selected disabled>{{$data->name}}</option>
                         @foreach($type as $key => $t)
                             @if($t->pid==0)
                                 <option value="{{$t->id}}">{{$t->name}}</option>
@@ -38,7 +39,7 @@
                     <label>商品分类</label>
                 </div>
                 <div class="input-field col s2">
-                    <input type="checkbox" checked="checked" id="show">
+                    <input type="checkbox" {{$data->enable==1?'checked':''}} id="show">
                     <label for="show">显示</label>
                 </div>
                 <div class="input-field col s2">
@@ -49,7 +50,7 @@
             <div class="row">
                 <div class="input-field col s6">
                     <label for="resource">来源:</label>
-                    <input type="text" class="validate" id="resource">
+                    <input type="text" class="validate" id="resource" value="{{$data->source}}">
                 </div>
             </div>
             <div class="row">
