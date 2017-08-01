@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="input-field col s6">
                     <label for="name">文章标题:</label>
-                    <input type="text" class="validate" id="name" value="{{$data.title}}">
+                    <input type="text" class="validate" id="name" value="{{$data->title}}">
                 </div>
             </div>
             <div class="row">
@@ -53,7 +53,7 @@
                     <input type="text" class="validate" id="resource" value="{{$data->source}}">
                 </div>
             </div>
-            <div class="row">
+            <div class="row">0{{----}}
                 @include('vendor.ueditor.assets')
                 <script type="text/javascript">
                     var ue = UE.getEditor('container');
@@ -74,10 +74,15 @@
 
 @section('js')
     <script>
-        //$('#')
+        var keywords ="{{$data->keywords}}";
+        var tag=keywords.split(',');
+
         $('#keywords').material_chip({
             placeholder: '输入回车后增加标签',
             secondaryPlaceholder: '+关键词',
+            data:[{tag:1},{tag:2}]
+
+            ,
         });
         $('#type').material_select();
         layui.use('layer',function(){var layer=layui.layer;})

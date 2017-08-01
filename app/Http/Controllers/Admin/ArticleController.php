@@ -74,10 +74,13 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $data   =   Article::join('article_types','articles.tid','=','article_types.id')->where('url',$id)->get();
+
+        $data   =   Article::join('article_types','articles.tid','=','article_types.id')
+            ->where('articles.url','=',$id)
+            ->first();
         $type   = Article_type::with('child')->get();
 
-        return view('admin.article.edit',compact('data'));
+        return view('admin.article.edit',compact('data','type'));
     }
 
     /**
