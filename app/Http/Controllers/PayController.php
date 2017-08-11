@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\Cart;
+use App\Factory\Promotion;
 use App\Order;
 use App\Order_goods;
 use Illuminate\Http\Request;
@@ -14,10 +15,13 @@ use function PHPSTORM_META\map;
 
 class PayController extends Controller
 {
+    use Promotion;
     public function index($id)
     {
         $cart=$this->findCart($id);
         $address=Address::where('uid',Auth::id())->orderBy('type','desc')->get();
+        //$promotion =['type'=>'满减','condition'=>300,'return'=>50,'total'=>900];
+        //dd($this->getTotal($promotion));
         return view('pay.index',compact('cart','address','id'));
     }
 
