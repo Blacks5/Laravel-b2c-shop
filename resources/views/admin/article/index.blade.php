@@ -70,7 +70,7 @@
         }
 
         function addEdit(url){
-            var urls="{{url('admin/article/')}}"+url+'/edit';
+            var urls="{{url('admin/article/')}}/"+url+'/edit';
             openUrl(urls);
         }
 

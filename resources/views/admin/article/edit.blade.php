@@ -53,9 +53,11 @@
                     <input type="text" class="validate" id="resource" value="{{$data->source}}">
                 </div>
             </div>
-            <div class="row">0{{----}}
+            <div class="row">{{----}}
                 @include('vendor.ueditor.assets')
                 <script type="text/javascript">
+
+                    var content = "{{(String)($data->content)}}";
                     var ue = UE.getEditor('container');
                     ue.ready(function() {
                         ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
@@ -63,7 +65,7 @@
                 </script>
 
                 <!-- 编辑器容器 -->
-                <script id="container" name="content" type="text/plain"></script>
+                <script id="container" name="content" type="text/html">{{(String)($data->content)}}</script>
             </div>
             <div class="input-field col s12">
                 <button type="button" id="add" class="btn btn-info" onclick="addGoods()">增加</button>
@@ -76,11 +78,16 @@
     <script>
         var keywords ="{{$data->keywords}}";
         var tag=keywords.split(',');
+        var news =new Array();
+        for(var i=0;i<tag.length;i++){
+            news.push({'tag':tag[i]});
+
+        }
 
         $('#keywords').material_chip({
             placeholder: '输入回车后增加标签',
             secondaryPlaceholder: '+关键词',
-            data:[{tag:1},{tag:2}]
+            data:news
 
             ,
         });
@@ -111,7 +118,7 @@
                 'show':show,
                 'recommend':recommend,
                 'content':content,
-                'resource':$('#resource').val(),
+                'source':$('#resource').val(),
                 'url':' '
             };
             $.ajax({
